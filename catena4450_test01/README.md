@@ -1,6 +1,7 @@
 # Catena 4450 Test01 Sketch 
 
-This sketch is used for the Ithaca power project and other AC power management applications. It's also a great starting point for doing Catena 4450 work. Because of the portability features of the [Catena-Arduino-Platform](https://github.com/mcci-catena/Catena-Arduino-Platform) library.
+This sketch is used for the Ithaca power project and other AC power management applications. It's also a great starting point for doing Catena 4450 work. Because of the portability features of the [Catena-Arduino-Platform](https://github.com/mcci-catena/Catena-Arduino-Platform) library. It also can be used on most other Catenas that are configured as M101 (pulse monitoring) devices.
+ And also this sketch demonstrates the MCCI Catena&reg; 4450 as a remote temperature/humidity/light/water/soil sensor.
 
 <!-- markdownlint-disable MD004 MD033 -->
 <!-- markdownlint-capture -->
@@ -15,9 +16,6 @@ This sketch is used for the Ithaca power project and other AC power management a
 - [Build and Download](#build-and-download)
 - [Load the sketch into the Catena](#load-the-sketch-into-the-catena)
 - [Provision your Catena 4450](#provision-your-catena-4450)
-	- [Check platform provisioning](#check-platform-provisioning)
-	- [Platform Provisioning](#platform-provisioning)
-	- [Starting Over](#starting-over)
 - [Notes](#notes)
 	- [Getting Started with The Things Network](#getting-started-with-the-things-network)
 	- [Data Format](#data-format)
@@ -174,56 +172,7 @@ Load the sketch into the Catena using `Sketch`>`Upload` and move on to provision
 
 ## Provision your Catena 4450
 
-This can be done with any terminal emulator, but it's easiest to do it with the serial monitor built into the Arduino IDE or with the equivalent monitor that's part of the Visual Micro IDE.
-
-### Check platform provisioning
-
-![Newline](./assets/serial-monitor-newline.png)
-
-At the bottom right side of the serial monitor window, set the dropdown to `Newline` and `115200 baud`.
-
-Enter the following command, and press enter:
-
-```console
-system configure platformguid
-```
-
-If the Catena is functioning at all, you'll either get an error message, or you'll get a long number like:
-
-```consle
-82BF2661-70CB-45AE-B620-CAF695478BC1
-```
-
-(Several numbers are possible.)
-
-![platformguid](./assets/system-configure-platformguid.png)
-
-![platform number](./assets/platform-number.png)
-
-If you get an error message, please follow the **Platform Provisioning** instructions. Otherwise, skip to **LoRAWAN Provisioning**.
-
-### Platform Provisioning
-
-The Catena 4450 has a number of build options. We have a single firmware image to support the various options. The firmware figures out the build options by reading data stored in the FRAM, so if the factory settings are not present or have been lost, you need to do the following.
-
-If your Catena 4450 is fresh from the factory, you will need to enter the following commands.
-
-- <code>system configure syseui <strong><em>serialnumber</em></strong></code>
-
-You will find the serial number on the Catena 4450 assembly. If you can't find a serial number, please contact MCCI for assistance.
-
-Continue by entering the following commands.
-
-- `system configure operatingflags 1`
-- `system configure platformguid 82BF2661-70CB-45AE-B620-CAF695478BC1`
-
-### Starting Over
-
-If all the typing in [Changing registration](#changing-registration) is too painful, or if you're in a real hurry, you can simply reset the Catena's non-volatile memory to it's initial state. The command for this is:
-
-- `fram reset hard`
-
-Then reset your Catena, and return to [Provision your Catena 4450](#provision-your-catena-4450).
+In order to provision the Catena, refer the following document: [How-To-Provision-Your-Catena-Device](https://github.com/mcci-catena/Catena-Sketches/blob/master/extra/How-To-Provision-Your-Catena-Device.md).
 
 ## Notes
 

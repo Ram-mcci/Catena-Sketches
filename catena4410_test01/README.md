@@ -1,6 +1,6 @@
-# Catena 4410 test01 
+# Catena 4410 Test01 Sketch
 
-This sketch is used for the Ithaca power project and other AC power management applications. It's also a great starting point for doing Catena 4410 work.
+This sketch is used for the Ithaca power project and other AC power management applications. It's also a great starting point for doing Catena 4410 work. Because of the portability features of the [Catena-Arduino-Platform](https://github.com/mcci-catena/Catena-Arduino-Platform) library. And also this sketch demonstrates the MCCI Catena&reg; 4410 as a remote temperature/humidity/light/water/soil sensor.
 
 <!-- markdownlint-disable MD004 MD033 -->
 <!-- markdownlint-capture -->
@@ -142,11 +142,9 @@ Load the sketch into the Catena using `Sketch`>`Upload` and move on to provision
 
 ## Provision your Catena 4410
 
-This can be done with any terminal emulator, but it's easiest to do it with the serial monitor built into the Arduino IDE or with the equivalent monitor that's part of the Visual Micro IDE.
-
+In order to provision the Catena, refer the following document: [How-To-Provision-Your-Catena-Device](https://github.com/mcci-catena/Catena-Sketches/blob/master/extra/How-To-Provision-Your-Catena-Device.md).
 
 ## Notes
-
 
 ### gitboot.sh and the other sketches
 
