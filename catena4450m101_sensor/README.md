@@ -27,7 +27,6 @@ This sketch is used for the Ithaca power project and other AC power management a
 	- [Data Format](#data-format)
 	- [Unplugging the USB Cable while running on batteries](#unplugging-the-usb-cable-while-running-on-batteries)
 	- [Deep sleep and USB](#deep-sleep-and-usb)
-	- [gitboot.sh and the other sketches](#gitbootsh-and-the-other-sketches)
 
 <!-- /TOC -->
 <!-- markdownlint-restore -->
@@ -150,8 +149,6 @@ Repos downloaded:      MCCI_FRAM_I2C Catena-Arduino-Platform arduino-lorawan Cat
 
 It has a number of advanced options; use `../git-boot.sh -h` to get help, or look at the source code [here](https://github.com/mcci-catena/Catena-Sketches/blob/master/git-boot.sh).
 
-**Beware of issue #18**.  If you happen to already have libraries installed with the same names as any of the libraries in `git-repos.dat`, `git-boot.sh` will silently use the versions of the library that you already have installed. (We hope to soon fix this to at least tell you that you have a problem.)
-
 ### List of required libraries
 
 This sketch depends on the following libraries.
@@ -184,120 +181,7 @@ Load the sketch into the Catena using `Sketch`>`Upload` and move on to provision
 
 ## Provision your Catena 4450
 
-This can be done with any terminal emulator, but it's easiest to do it with the serial monitor built into the Arduino IDE or with the equivalent monitor that's part of the Visual Micro IDE.
-
-### Check platform provisioning
-
-![Newline](./assets/serial-monitor-newline.png)
-
-At the bottom right side of the serial monitor window, set the dropdown to `Newline` and `115200 baud`.
-
-Enter the following command, and press enter:
-
-```console
-system configure platformguid
-```
-
-If the Catena is functioning at all, you'll either get an error message, or you'll get a long number like:
-
-```consle
-82BF2661-70CB-45AE-B620-CAF695478BC1
-```
-
-(Several numbers are possible.)
-
-![platformguid](./assets/system-configure-platformguid.png)
-
-![platform number](./assets/platform-number.png)
-
-If you get an error message, please follow the **Platform Provisioning** instructions. Otherwise, skip to **LoRAWAN Provisioning**.
-
-### Platform Provisioning
-
-The Catena 4450 has a number of build options. We have a single firmware image to support the various options. The firmware figures out the build options by reading data stored in the FRAM, so if the factory settings are not present or have been lost, you need to do the following.
-
-If your Catena 4450 is fresh from the factory, you will need to enter the following commands.
-
-- <code>system configure syseui <strong><em>serialnumber</em></strong></code>
-
-You will find the serial number on the Catena 4450 assembly. If you can't find a serial number, please contact MCCI for assistance.
-
-Continue by entering the following commands.
-
-- `system configure operatingflags 1`
-- `system configure platformguid 82BF2661-70CB-45AE-B620-CAF695478BC1`
-
-### LoRaWAN Provisioning
-
-Some background: with LoRaWAN, you have to create a project on your target network, and then register your device with that project.
-
-Somewhat confusingly, the LoRaWAN specification uses the word "application" to refer to the group of devices in a project. We will therefore follow that convention. It's likely that your network provider follows taht convention too.
-
-We'll be setting up the device for "over the air authentication" (or OTAA).
-
-#### Preparing the network for your device
-
-For OTAA, we'll need to load three items into the device. (We'll use USB to load them in -- you don't have to edit any code.)  These items are:
-
-1. *The device extended unique identifier, or "devEUI"*. This is a 8-byte number.
-
-   For convenience, MCCI assigns a unique identifier to each Catena; you should be able to find it on a printed label on your device. It will be a number of the form "00-02-cc-01-??-??-??-??".
-
-2. *The application extended unique identifier, or "AppEUI"*. This is also an 8-byte number.
-
-3. *The application key, or "AppKey"*. This is a 16-byte number.
-
-If you're using The Things Network as your network provider, see the notes in the separate file in this repository: [Getting Started with The Things Network](../extra/Getting-Started-With-The-Things-Network.md). This walks you through the process of creating an application and registering a device. During that process, you will input the DevEUI (we suggest using the serial number printed on the Catena). At the end of the process, The Things Network will supply you with the required AppEUI and Application Key.
-
-For other networks, follow their instructions for determining the DevEUI and getting the AppEUI and AppKey.
-
-#### Preparing your device for the network
-
-Make sure your device is still connected to the Arduino IDE, and make sure the serial monitor is still open. (If needed, open it using Tools>Serial Monitor.)
-
-Enter the following commands in the serial monitor, substituting your _`DevEUI`_, _`AppEUI`_, and _`AppKey`_, one at a time.
-
-- <code>lorawan configure deveui <em>DevEUI</em></code>
-- <code>lorawan configure appeui <em>AppEUI</em></code>
-- <code>lorawan configure appkey <em>AppKey</em></code>
-- <code>lorawan configure join 1</code>
-
-After each command you will see an `OK`.
-
-![provisioned](./assets/provisioned.png)
-
-Then reboot your Catena (using the `system reset` command, or the reset button on the upper board). You may have to close and re-open the serial monitor after resetting the Catena.
-
-You should then see a series of messages including:
-
-```console
-EV_JOINED
-NetId ...
-```
-
-### Changing registration
-
-Once your device has joined the network, it's somewhat painful to unjoin.
-
-You need to enter a number of commands:
-
-- `lorawan configure appskey 0`
-- `lorawan configure nwkskey 0`
-- `lorawan configure fcntdown 0`
-- `lorawan configure fcntup 0`
-- `lorawan configure devaddr 0`
-- `lorawan configure netid 0`
-- `lorawan configure join 0`
-
-Then reset your device (using the reset button or `system reset`), and repeat [LoRaWAN Provisioning](#lorawan-provisioning) above.
-
-### Starting Over
-
-If all the typing in [Changing registration](#changing-registration) is too painful, or if you're in a real hurry, you can simply reset the Catena's non-volatile memory to it's initial state. The command for this is:
-
-- `fram reset hard`
-
-Then reset your Catena, and return to [Provision your Catena 4450](#provision-your-catena-4450).
+In order to provision the Catena, refer the following document: [How-To-Provision-Your-Catena-Device](https://github.com/mcci-catena/Catena-Sketches/blob/master/extra/How-To-Provision-Your-Catena-Device.md).
 
 ## Notes
 
@@ -322,7 +206,3 @@ When the Catena 4450 is in deep sleep, the USB port will not respond to cable at
 While disconnected, you won't be able to select the COM port for the board from the Arduino UI. And depending on the various operatingflags settings, even after reset, you may have trouble catching the board to download a sketch before it goes to sleep.
 
 The workaround is to "double tap" the reset button. As with any Feather M0, double-pressing the RESET button will put the Feather into download mode. To confirm this, the red light will flicker rapidly. You may have to temporarily change the download port using `Tools`>`Port`, but once the port setting is correct, you should be able to download no matter what state the board was in.
-
-### gitboot.sh and the other sketches
-
-The sketches in other directories in this tree are for engineering use at MCCI. The `git-repos.dat` file in this directory does not necessarily install all the required libraries needed for building the other directories. However, all the libraries should be available from [github.com/mcci-catena](https://github.com/mcci-catena/); and we are working on getting `git-repos.dat` files in every sub-directory.

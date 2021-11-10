@@ -114,8 +114,6 @@ Repos downloaded:      Catena-Arduino-Platform arduino-lorawan Catena-mcciadk ar
 
 It has a number of advanced options; use `../git-boot.sh -h` to get help, or look at the source code [here](https://github.com/mcci-catena/Catena-Sketches/blob/master/git-boot.sh).
 
-**Beware of issue #18**.  If you happen to already have libraries installed with the same names as any of the libraries in `git-repos.dat`, `git-boot.sh` will silently use the versions of the library that you already have installed. (We hope to soon fix this to at least tell you that you have a problem.)
-
 #### List of required libraries
 
 This sketch depends on the following libraries.

@@ -16,7 +16,6 @@
 - [Notes](#notes)
 	- [Setting up ST-Link connection](#setting-up-st-link-connection)
 	- [Data Format](#data-format)
-	- [gitboot.sh and the other sketches](#gitbootsh-and-the-other-sketches)
 
 <!-- /TOC -->
 ## Introduction
@@ -121,8 +120,6 @@ Repos downloaded:      Catena-Arduino-Platform arduino-lorawan Catena-mcciadk ar
 
 It has a number of advanced options; use `../git-boot.sh -h` to get help, or look at the source code [here](https://github.com/mcci-catena/Catena-Sketches/blob/master/git-boot.sh).
 
-**Beware of issue #18**.  If you happen to already have libraries installed with the same names as any of the libraries in `git-repos.dat`, `git-boot.sh` will silently use the versions of the library that you already have installed. (We hope to soon fix this to at least tell you that you have a problem.)
-
 #### List of required libraries
 
 This sketch depends on the following libraries.
@@ -188,7 +185,3 @@ nRST | Pin 15
 ### Data Format
 
 Refer to the [Protocol Description](../extra/catena-message-0x15-format.md) in the `extras` directory for information on how data is encoded.
-
-### gitboot.sh and the other sketches
-
-The sketches in other directories in this tree are for engineering use at MCCI. The `git-repos.dat` file in this directory does not necessarily install all the required libraries needed for building the other directories. However, all the libraries should be available from https://github.com/mcci-catena/;

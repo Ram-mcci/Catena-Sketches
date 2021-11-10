@@ -16,7 +16,6 @@
 - [Notes](#notes)
 	- [Setting up DFU on a Linux or Windows PC](#setting-up-dfu-on-a-linux-or-windows-pc)
 	- [Unplugging the USB Cable while running on batteries](#unplugging-the-usb-cable-while-running-on-batteries)
-	- [gitboot.sh and the other sketches](#gitbootsh-and-the-other-sketches)
 
 <!-- /TOC -->
 ## Introduction
@@ -123,8 +122,6 @@ Catena-Arduino-Platform                 BH1750
 
 It has a number of advanced options; use `../git-boot.sh -h` to get help, or look at the source code [here](https://github.com/mcci-catena/Catena-Sketches/blob/master/git-boot.sh).
 
-**Beware of issue #18**.  If you happen to already have libraries installed with the same names as any of the libraries in `git-repos.dat`, `git-boot.sh` will silently use the versions of the library that you already have installed. (We hope to soon fix this to at least tell you that you have a problem.)
-
 #### List of required libraries
 
 This sketch depends on the following libraries.
@@ -221,7 +218,3 @@ You may also refer to the detailed procedures that are part of the user manual. 
 The Catena 4551 dynamically uses power from the USB cable if it's available, even if a battery is connected. This allows you to unplug the USB cable after booting the Catena 4551 without causing the Catena 4551 to restart.
 
 Unfortunately, the Arudino USB drivers for the Catena 4551 do not distinguish between cable unplug and USB suspend. Any `Serial.print()` operation referring to the USB port will hang if the cable is unplugged after being used during a boot. The easiest work-around is to reboot the Catena after unplugging the USB cable. You can avoid this by using the Arduino UI to turn off DTR before unplugging the cable... but then you must remember to turn DTR back on. This is very fragile in practice.
-
-### gitboot.sh and the other sketches
-
-The sketches in other directories in this tree are for engineering use at MCCI. The `git-repos.dat` file in this directory does not necessarily install all the required libraries needed for building the other directories. However, other directories might have unique `git-repos.dat` to clone the required libraries, also, all the libraries should be available from https://github.com/mcci-catena/;

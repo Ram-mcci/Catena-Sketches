@@ -18,7 +18,7 @@ This sketch is used for the Ithaca power project and other AC power management a
 	- [Notes](#notes)
 	- [Getting Started with The Things Network](#getting-started-with-the-things-network)
 	- [Unplugging the USB Cable while running on batteries](#unplugging-the-usb-cable-while-running-on-batteries)
-	- [gitboot.sh and the other sketches](#gitbootsh-and-the-other-sketches)
+    - [Deep sleep and USB](#deep-sleep-and-usb)
 
 <!-- /TOC -->
 <!-- markdownlint-restore -->
@@ -169,8 +169,6 @@ Adafruit_TSL2561                        Catena-mcciadk                          
 
 It has a number of advanced options; use `../git-boot.sh -h` to get help, or look at the source code [here](https://github.com/mcci-catena/Catena-Sketches/blob/master/git-boot.sh).
 
-**Beware of issue #18**.  If you happen to already have libraries installed with the same names as any of the libraries in `git-repos.dat`, `git-boot.sh` will silently use the versions of the library that you already have installed. (We hope to soon fix this to at least tell you that you have a problem.)
-
 ### List of required libraries
 
 This sketch depends on the following libraries.
@@ -220,6 +218,12 @@ The Catena 4410 comes with a rechargable LiPo battery. This allows you to unplug
 
 Unfortunately, the Arudino USB drivers for the Catena 4410 do not distinguish between cable unplug and USB suspend. Any `Serial.print()` operation referring to the USB port will hang if the cable is unplugged after being used during a boot. The easiest work-around is to reboot the Catena after unplugging the USB cable. You can avoid this by using the Arduino UI to turn off DTR before unplugging the cable... but then you must remember to turn DTR back on. This is very fragile in practice.
 
-### gitboot.sh and the other sketches
+### Deep sleep and USB
 
-The sketches in other directories in this tree are for engineering use at MCCI. The `git-repos.dat` file in this directory does not necessarily install all the required libraries needed for building the other directories. However, all the libraries should be available from [github.com/mcci-catena](https://github.com/mcci-catena/); and we are working on getting `git-repos.dat` files in every sub-directory.
+When the Catena 4410 is in deep sleep, the USB port will not respond to cable attaches. When the 4410 wakes up, it will connect to the PC while it is doing its work, then disconnect to go back to sleep.
+
+While disconnected, you won't be able to select the COM port for the board from the Arduino UI. And depending on the various operatingflags settings, even after reset, you may have trouble catching the board to download a sketch before it goes to sleep.
+
+The workaround is to "double tap" the reset button. As with any Feather M0, double-pressing the RESET button will put the Feather into download mode. To confirm this, the red light will flicker rapidly. You may have to temporarily change the download port using `Tools`>`Port`, but once the port setting is correct, you should be able to download no matter what state the board was in.
+
+
